@@ -17,3 +17,10 @@ class FileHelper:
 		folderpath = os.path.dirname(filepath)
 		if not FileHelper.exists(folderpath):
 			os.makedirs(os.path.dirname(folderpath))
+
+class StringHelper:
+	@staticmethod
+	def fromAsianDecimalToFloat(asianDecimal):
+		if asianDecimal != None:
+			return float(asianDecimal.strip().replace(".", "").replace(",","."))
+		return None

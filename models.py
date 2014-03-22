@@ -25,7 +25,11 @@ class BankCurrencyDB:
 		
 		if jsonText == None or len(jsonText) == 0:
 			jsonText = "[]"
-		dataList = BankCurrencyDB.fromjson(jsonText);
+		try:
+			dataList = BankCurrencyDB.fromjson(jsonText);
+		except Exception as e:
+			print "Some error:", e
+			dataList = list()
 		#update the datalist
 		searchData = None;
 		for i in range(0,len(dataList)):
@@ -76,6 +80,7 @@ class BankCurrencyInfo:
 		sellValueDict = {}
 		buyValueDict = {}
 		for item in conversionTableList:
+			# print ("bankname:*"+name+"*name:*"+item["name"]+"*sell:*"+str(item["sell"])+"*buy:*"+str(item["buy"])+"*")
 			sellValueDict[item["name"]] = float(item["sell"])
 			buyValueDict[item["name"]] = float(item["buy"])
 		return cls(name, currencyName, sellValueDict, buyValueDict, updatedAt)
@@ -90,20 +95,6 @@ class BankCurrencyInfo:
 
 	def __repr__(self):
 		return json.dumps(self, cls=SimpleModelJsonEncoder, indent=4)
-
-class AbstractBankCurrencyParser:
-	def __repr__(self):
-		return "Name:"+self.name+"\nDesc:"+self.desc+"\nURL:"+self.url
-
-	def __init__(self, name, baseCurrency, desc, url):
-		self.name = name;
-		self.desc = desc;
-		self.url = url
-		self.baseCurrency = baseCurrency
-	
-	def parse(self):
-		'''Will return BankCurrencyInfo data'''
-		raise NotImplementedError("This method must be implemented on subclass")
 
 if __name__ == "__main__":
 	sellValueDict = {}
