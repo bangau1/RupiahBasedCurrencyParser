@@ -7,6 +7,32 @@ class SimpleModelJsonEncoder(json.JSONEncoder):
 	def default(self, obj):
 		return obj.__dict__;
 
+class ListBankCurrencyInfo:
+	def __init__(self):
+		self.data = list()
+
+	@classmethod
+	def fromJson(cls, jsonText):
+		if jsonText == None:
+			return ListBankCurrencyInfo()
+		jsondict = json.loads(jsonText)
+		data = list()
+		if "data" in jsondict:
+			listBankArray = jsondict["data"]
+			for obj in listBankArray:
+				data.append(BankCurrencyInfo.fromJsonDict(obj))
+			return ListBankCurrencyInfo.fromListOfbankCurrencyInfo(data);
+		else:
+			return ListBankCurrencyInfo();
+
+	@classmethod
+	def fromListOfbankCurrencyInfo(cls, listOfBankCurrencyInfo):
+		ref = cls();
+		ref.data = listOfBankCurrencyInfo;
+		if ref.data == None:
+			ref.data = list()
+		return ref;
+
 class BankCurrencyDB:
 	def __init__(self, filePath):
 		self.filePath = filePath
@@ -23,23 +49,17 @@ class BankCurrencyDB:
 			return False
 		jsonText = self.readDBFile()
 		
-		if jsonText == None or len(jsonText) == 0:
-			jsonText = "[]"
-		try:
-			dataList = BankCurrencyDB.fromjson(jsonText);
-		except Exception as e:
-			print "Some error:", e
-			dataList = list()
+		dataList = BankCurrencyDB.fromJson(jsonText);
 		#update the datalist
 		searchData = None;
-		for i in range(0,len(dataList)):
-			data = dataList[i]
+		for i in range(0,len(dataList.data)):
+			data = dataList.data[i]
 			if data.name == currencyInfo.name:
 				searchData = data
-				dataList[i] = currencyInfo
+				dataList.data[i] = currencyInfo
 				break
 		if searchData == None:
-			dataList.append(currencyInfo)
+			dataList.data.append(currencyInfo)
 		jsonText = BankCurrencyDB.toJson(dataList)
 
 		FileHelper.makedirsifnotexists(self.filePath)
@@ -53,12 +73,8 @@ class BankCurrencyDB:
 		return json.dumps(dataListObject, cls=SimpleModelJsonEncoder);
 
 	@staticmethod
-	def fromjson(jsonText):
-		jsonobject = json.loads(jsonText)
-		data = list()
-		for obj in jsonobject:
-			data.append(BankCurrencyInfo.fromJsonDict(obj))
-		return data;
+	def fromJson(jsonText):
+		return ListBankCurrencyInfo.fromJson(jsonText);
 
 class CurrencyInfo:
 	def __init__(self, name, sellValue, buyValue):
