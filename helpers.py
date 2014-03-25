@@ -15,8 +15,13 @@ class FileHelper:
 	@staticmethod
 	def makedirsifnotexists(filepath):
 		folderpath = os.path.dirname(filepath)
+		print "makedirsifnotexists :", folderpath
 		if not FileHelper.exists(folderpath):
-			os.makedirs(os.path.dirname(folderpath))
+			print "not exists so create the ", folderpath
+			os.makedirs(folderpath)
+			print "success create:", folderpath
+		else:
+			print folderpath, "is exists"
 
 class StringHelper:
 	@staticmethod

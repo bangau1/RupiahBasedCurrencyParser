@@ -1,0 +1,28 @@
+{
+	"data":[
+		{
+			"name":"Bank Central Asia",
+			"websiteUrl":"http://www.bca.co.id",
+			"url":"http://klic.bca.co.id",
+			"codeName":"BCA"
+		},
+		{
+			"name":"Bank Mandiri",
+			"websiteUrl":"http://www.bca.co.id",
+			"url":"http://klic.bca.co.id",
+			"codeName":"MANDIRI"
+		},
+		{
+			"name":"Bank Negara Indonesia",
+			"websiteUrl":"http://www.bca.co.id",
+			"url":"http://klic.bca.co.id",
+			"codeName":"BNI"
+		},
+		{
+			"name":"Bank CIMB Niaga",
+			"websiteUrl":"http://www.bca.co.id",
+			"url":"http://klic.bca.co.id",
+			"codeName":"CIMB"
+		}
+	]
+}

@@ -36,6 +36,7 @@ class ListBankCurrencyInfo:
 class BankCurrencyDB:
 	def __init__(self, filePath):
 		self.filePath = filePath
+		FileHelper.makedirsifnotexists(self.filePath)
 
 	def readDBFile(self):
 		try:
@@ -61,8 +62,6 @@ class BankCurrencyDB:
 		if searchData == None:
 			dataList.data.append(currencyInfo)
 		jsonText = BankCurrencyDB.toJson(dataList)
-
-		FileHelper.makedirsifnotexists(self.filePath)
 		
 		fopen = open(self.filePath, 'w')
 		fopen.write(jsonText)
