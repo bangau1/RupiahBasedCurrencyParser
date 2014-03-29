@@ -1,5 +1,6 @@
 #!/bin/python
 import json
+import time
 
 from helpers import FileHelper
 
@@ -10,6 +11,7 @@ class SimpleModelJsonEncoder(json.JSONEncoder):
 class ListBankCurrencyInfo:
 	def __init__(self):
 		self.data = list()
+		self.updatedAt = 0;
 
 	@classmethod
 	def fromJson(cls, jsonText):
@@ -61,6 +63,7 @@ class BankCurrencyDB:
 				break
 		if searchData == None:
 			dataList.data.append(currencyInfo)
+		dataList.updatedAt = int(time.time())
 		jsonText = BankCurrencyDB.toJson(dataList)
 		
 		fopen = open(self.filePath, 'w')

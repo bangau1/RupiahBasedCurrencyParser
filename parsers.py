@@ -27,6 +27,20 @@ class AbstractBankCurrencyParser:
 		'''Will return BankCurrencyInfo data'''
 		raise NotImplementedError("This method must be implemented on subclass")
 
+### Abstract Parser Gold Logam Mulia
+class AbstractLogamMuliaParser:
+	def __repr__(self):
+		return "Name:"+self.name+"\nDesc:"+self.desc+"\nURL:"+self.url
+
+	def __init__(self, name, baseCurrency, desc, url):
+		self.name = name
+		self.baseCurrency = baseCurrency;
+		self.desc = desc;
+		self.url = url;
+	def parse(self):
+		'''Will return all info about Gold Price'''
+		raise NotImplementedError("This method must be implemented on subclass")
+
 class AbstractRupiahBasedCurrencyParser(AbstractBankCurrencyParser):
 	def __init__(self, name, desc, url):
 		AbstractBankCurrencyParser.__init__(self, name, "IDR", desc, url);
@@ -325,6 +339,12 @@ class BankMandiriParser(AbstractRupiahBasedCurrencyParser):
 			print helpers.justifyLeft(code, 8), helpers.justifyLeft(sell, 14), helpers.justifyLeft(buy, 14)
 		updateAt = calendar.timegm(time.gmtime())
 		return BankCurrencyInfo(self.name, self.baseCurrency, sellValueDict, buyValueDict, updateAt)
+
+### Logam Mulia (Antam) Parser #######
+######################################
+######################################
+class LogamMuliaAntamParser(AbstractLogamMuliaParser):
+	pass
 
 
 if __name__ == "__main__":
