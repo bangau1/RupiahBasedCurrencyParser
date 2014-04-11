@@ -54,7 +54,7 @@ class AbstractRupiahBasedCurrencyParser(AbstractBankCurrencyParser):
 ######################################
 class BCAParser(AbstractRupiahBasedCurrencyParser):
 	def __init__(self):
-		AbstractRupiahBasedCurrencyParser.__init__(self, "BCA", "http://www.bca.co.id", "http://www.bca.co.id/id/biaya-limit/kurs_counter_bca/kurs_counter_bca_landing.jsp")
+		AbstractRupiahBasedCurrencyParser.__init__(self, "BCA", "http://www.bca.co.id", "http://www.bca.co.id/id/kurs-sukubunga/kurs_counter_bca/kurs_counter_bca_landing.jsp")
 	def parse(self):
 		print "="*36
 		print "Start parsing:", self
@@ -360,5 +360,5 @@ if __name__ == "__main__":
 		import codecs
 		sys.stdout = codecs.open(sys.argv[1], 'w',encoding='utf-8')
 	
-	data = BankMandiriParser()
+	data = BCAParser()
 	print data.parse()
